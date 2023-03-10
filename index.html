@@ -63,40 +63,28 @@ z-index: 111;
    </style> 
 <script>
 $(document).ready(function() {
-    var imagesArray = [];
+    var imagesArray=[]
     $.ajax({
-        url: 'headerimages/',
-        success: function (data) {
-            // Find all the <a> tags in the response and add the href attribute to the imagesArray
-            $(data).find("a").attr("href", function (i, val) {
-                if (val.match(/.*\.(jpe?g|png|gif)$/i)) {
-                    var imagePath = val.replace(/\\/g, "/").replace(/\s/g, "%20");
-                    console.log(imagePath)
-                    imagesArray.push(imagePath);
-                }
-            });
-            console.log(imagesArray);
-        },
-        async: true  // Make the AJAX call synchronous to ensure that the imagesArray is populated before the code continues
-    });
-
-    function changeBackground() {
-    var randomIndex = Math.floor(Math.random() * imagesArray.length);
-    var randomImage = imagesArray[randomIndex];
-    console.log(randomImage); // Print the selected image to the console
-    $("#top").css("background-image", "url(" + randomImage + ")");
-};
-
-    setInterval(changeBackground, 4000);
-
-    $('#sel1').change(function() {
-        $('input:radio[name=rtoggle][value='+$(this).val()+']').click();
-    });
-
-    var mobile = (/iphone|ipod|android|blackberry|mini|windows\sce|palm/i.test(navigator.userAgent.toLowerCase()));  
-    if (mobile) { 
-        $('.mapboxgl-ctrl-bottom-left').css('display', 'none'); // OR you can use $('.navWrap').hide();
-    } 
+    url: 'headerimages/',
+    success: function (data) {
+        // Find all the <a> tags in the response and add the href attribute to the imagesArray
+        $(data).find("a").attr("href", function (i, val) {
+            if (val.match(/.*\.(jpe?g|png|gif)$/i)) {
+                var imagePath = val.replace(/\\/g, "/").replace(/\s/g, "%20");
+                imagesArray.push(imagePath);
+            }
+        });
+        console.log(imagesArray)
+        // Change the background of the div every 5 seconds
+        setInterval(function () {
+            var randomIndex = Math.floor(Math.random() * imagesArray.length);
+            var randomImage = imagesArray[randomIndex];
+            console.log(randomImage)
+            $("#top").css("background-image", "url(" + randomImage + ")");
+        }, 3000);
+    }
+});
+    
 });
    
 
