@@ -65,7 +65,7 @@ z-index: 111;
 $(document).ready(function() {
     var imagesArray=[]
     $.ajax({
-    url: 'headerimages/',
+    url: "https://effulgent-vacherin-9b24ea.netlify.app/headerimages/",
     async:false,
     success: function (data) {
         // Find all the <a> tags in the response and add the href attribute to the imagesArray
@@ -81,7 +81,7 @@ $(document).ready(function() {
         setInterval(function () {
             var randomIndex = Math.floor(Math.random() * imagesArray.length);
             var randomImage = imagesArray[randomIndex];
-            var imageUrl = "headerimages/" + randomImage;
+            var imageUrl = "https://effulgent-vacherin-9b24ea.netlify.app/headerimages/" + randomImage;
             console.log(imageUrl)
             $("#top").css("background-image", "url(" + imageUrl + ")");
         }, 3000);
