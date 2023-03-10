@@ -19,7 +19,7 @@ gtag('set', {'user_id': 'USER_ID'}); // Set the user ID using signed-in user_id.
 <link href='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.css' rel='stylesheet' />
     <link rel="icon" href="logo.png">
     
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>    <meta http-equiv="X-UA-Compatible" content="text/html; charset=UTF-8">
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>    <meta http-equiv="X-UA-Compatible" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="keywords" content="2019 Australian Election, Australian Election Results,Australian Election Map,Election Map,Election Results Map, How did we vote, 2019 election results,Scott Morrision Election, 2019 election resuts, 2019 australian election map, 2019 Australian Federal Election, australia votes"> 
     <meta name="title" content="How did we vote? - A detailed breakdown of Australia's election">
@@ -28,15 +28,12 @@ gtag('set', {'user_id': 'USER_ID'}); // Set the user ID using signed-in user_id.
     <meta name="og:title" content="How did we vote? - A detailed breakdown of Australia's election">
     <meta name="og:description" content="An Incredily detailed series of maps detialing how australia voted, see how your community voted">
     <title>Inward Bound</title>
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     <link href="css/stylish-portfolio.css" rel="stylesheet">
     <script src = "papaparse.min.js"></script>
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
-    <style>
-
-#map2323 { margin:5%;   width:90%;height: 90% }
-</style>
     
     
 <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.min.js'></script>
@@ -60,42 +57,81 @@ z-index: 111;
     #top{
     height: 80%;
         width:100%;
-   </style> 
-<script>
-$(document).ready(function() {
-    var imagesArray=[]
-    $.ajax({
-    url: "https://effulgent-vacherin-9b24ea.netlify.app/headerimages/",
-    async:false,
-    success: function (data) {
-        // Find all the <a> tags in the response and add the href attribute to the imagesArray
-        $(data).find("a").attr("href", function (i, val) {
-            if (val.match(/.*\.(jpe?g|png|gif)$/i)) {
-                var imagePath = val.replace(/\\/g, "/").replace(/\s/g, "%20");
-                var filename = imagePath.split('/').pop(); // Extract just the filename
-                imagesArray.push(filename);
-            }
-        });
-        console.log(imagesArray)
-        // Change the background of the div every 5 seconds
-        setInterval(function () {
-            var randomIndex = Math.floor(Math.random() * imagesArray.length);
-            var randomImage = imagesArray[randomIndex];
-            var imageUrl = "https://effulgent-vacherin-9b24ea.netlify.app/headerimages/" + randomImage;
-            console.log(imageUrl)
-            $("#top").css("background-image", "url(" + imageUrl + ")");
-        }, 3000);
-    }
-});
+   </style>
+    <style>
+    .colored-div {
+  background-color: #00002E;
+  color: #E2EFFF;
+  padding: 20px;
+}
+.mirrored-div {
+  background-color: #E2EFFF;
+  color: #00002E;
     
-});
-   
+  padding: 20px;
+}
 
-  </script> 
+.mirrored-div h2,
+.mirrored-div p {
+  text-align: center;
+}
+
+.mirrored-div .image-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mirrored-div img {
+  max-width: 100%;
+  height: auto;
+}
+
+.image-wrapper {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-img {
+  max-width: 100%;
+  height: auto;
+}
+    </style>
+<script>
+  var imagesArray = [];
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'headerimages/', true);
+  xhr.onload = function () {
+    if (this.status === 200) {
+      var parser = new DOMParser();
+      var response = parser.parseFromString(this.responseText, 'text/html');
+      var links = response.querySelectorAll('a');
+      for (var i = 0; i < links.length; i++) {
+        var href = links[i].getAttribute('href');
+        if (href.match(/.*\.(jpe?g|png|gif)$/i)) {
+          var imagePath = href.replace(/\\/g, "/").replace(/\s/g, "%20");
+          var filename = imagePath.split('/').pop(); // Extract just the filename
+          imagesArray.push(filename);
+        }
+      }
+        console.log(imagesArray);
+      setInterval(function () {
+        var randomIndex = Math.floor(Math.random() * imagesArray.length);
+        var randomImage = imagesArray[randomIndex];
+        var imageUrl = "headerimages/" + randomImage;
+        document.getElementById('top').style.backgroundImage = "url('" + imageUrl + "')";
+      }, 3000);
+    }
+  };
+  xhr.send();
+</script> 
   <style>
     #top {
         background-image: url("headerimages/headimage%20(1).jpg");
         background-size: cover;
+        background-repeat: no-repeat;
         height: 100vh;
         display: flex;
         justify-content: center;
@@ -109,8 +145,14 @@ $(document).ready(function() {
         transform: translate(-50%, -50%);
         z-index: 1;
         max-width:  80%;
-        max-height: 80%;
+        max-height: 80%
     }
+    .text-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
 </style>
 </head>
 <body>
@@ -136,7 +178,59 @@ $(document).ready(function() {
         <div class="text-vertical-center">
                     <img src="logo.png" alt="logo" class="logo-img">
     </div></div>
-    
+<div class="container-fluid colored-div" id="about">
+  <div class="row colored-div">
+    <!-- Column with image -->
+    <div class="col-md-6 d-none d-md-block colored-div">
+      <div class="image-wrapper">
+        <img src="aboutinfo.jpg" class="card-img img-fluid" alt="Image">
+      </div>
+    </div>
+
+    <div class="col-md-6 colored-div">
+      <div class="text-center d-flex flex-column justify-content-center align-items-center h-100">
+        <!-- Text overlay on image for small screens -->
+        <div class="d-md-none position-relative">
+          <img src="aboutinfo.jpg" style="padding: 10px" class="card-img img-fluid" alt="Image">
+        </div>
+
+        <!-- Text content -->
+        <div class="col-md-12">
+          <h2 class="mt-10">61 years of Stupidity</h2>
+          <p class="mt-10" >Inward Bound is a unique adventure footrace, challenging the physical and emotional endurance of participants and providing safe and exciting opportunity to explore the Australian wilderness. Somehow it continues to run into it's 58th edition (<i>Yes we know, it's been cancelled a few times lately as well as in 2008</i>).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid inverted-div" id="mirrored">
+  <div class="row inverted-div">
+    <!-- Column with text -->
+    <div class="col-md-6 d-md-block inverted-div">
+      <div class="text-center d-flex flex-column justify-content-center align-items-center h-100">
+        <!-- Text content -->
+        <div class="col-md-12">
+          <h2 class="mt-10"> IB 2023</h2>
+          <p class="mt-10" >Due to popular demand IB is back (well at least from one of the photographed runners); and hopefully this time not delayed (<i>The Ib committee notes this is merely an aspiration not a promise in any way shape or form</i>). Where will endpoint be this year? (Rumour has it you need to make sure your passport is ready).</p>
+        </div>
+
+        <!-- Text overlay on image for small screens -->
+        <div class="d-md-none position-relative">
+          <img src="conquest.jpg" style="padding: 10px" class="card-img img-fluid" alt="Image">
+        </div>
+      </div>
+    </div>
+
+    <!-- Column with image -->
+    <div class="col-md-6 d-none d-md-block inverted-div">
+      <div class="image-wrapper">
+        <img src="aboutinfo.jpg" class="card-img img-fluid" alt="Image">
+      </div>
+    </div>
+  </div>
+</div>
+
+
     <footer>
         <div class="container" id="contact">
             <div class="row">
@@ -155,7 +249,6 @@ $(document).ready(function() {
         </div>
         <a id="to-top" href="#top" class="btn btn-dark btn-lg"><i class="fa fa-chevron-up fa-fw fa-1x"></i></a>
     </footer>
-    <script src="js/bootstrap.min.js"></script>
      <script>
 $("#menu-close").click(function(e){e.preventDefault();$("#sidebar-wrapper").toggleClass("active")});$("#menu-toggle").click(function(e){e.preventDefault();$("#sidebar-wrapper").toggleClass("active")});$(function(){$('a[href*=#]:not([href=#],[data-toggle],[data-target],[data-slide])').click(function(){if(location.pathname.replace(/^\//,'')==this.pathname.replace(/^\//,'')||location.hostname==this.hostname){var target=$(this.hash);target=target.length?target:$('[name='+this.hash.slice(1)+']');if(target.length){$('html,body').animate({scrollTop:target.offset().top},1000);return false}}})});var fixed=false;$(document).scroll(function(){if($(this).scrollTop()>250){if(!fixed){fixed=true;$('#to-top').show("slow",function(){$('#to-top').css({position:'fixed',display:'block'})})}}else{if(fixed){fixed=false;$('#to-top').hide("slow",function(){$('#to-top').css({display:'none'})})}}});
     </script>
