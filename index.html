@@ -66,12 +66,14 @@ $(document).ready(function() {
     var imagesArray=[]
     $.ajax({
     url: 'headerimages/',
+    async:false,
     success: function (data) {
         // Find all the <a> tags in the response and add the href attribute to the imagesArray
         $(data).find("a").attr("href", function (i, val) {
             if (val.match(/.*\.(jpe?g|png|gif)$/i)) {
                 var imagePath = val.replace(/\\/g, "/").replace(/\s/g, "%20");
-                imagesArray.push(imagePath);
+                var filename = imagePath.split('/').pop(); // Extract just the filename
+                imagesArray.push(filename);
             }
         });
         console.log(imagesArray)
@@ -79,8 +81,9 @@ $(document).ready(function() {
         setInterval(function () {
             var randomIndex = Math.floor(Math.random() * imagesArray.length);
             var randomImage = imagesArray[randomIndex];
-            console.log(randomImage)
-            $("#top").css("background-image", "url(" + randomImage + ")");
+            var imageUrl = "headerimages/" + randomImage;
+            console.log(imageUrl)
+            $("#top").css("background-image", "url(" + imageUrl + ")");
         }, 3000);
     }
 });
