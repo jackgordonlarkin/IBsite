@@ -71,6 +71,7 @@ $(document).ready(function() {
             $(data).find("a").attr("href", function (i, val) {
                 if (val.match(/.*\.(jpe?g|png|gif)$/i)) {
                     var imagePath = val.replace(/\\/g, "/").replace(/\s/g, "%20");
+                    console.log(imagePath)
                     imagesArray.push(imagePath);
                 }
             });
