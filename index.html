@@ -76,6 +76,7 @@ $.ajax({
     },
     async: false  // Make the AJAX call synchronous to ensure that the imagesArray is populated before the code continues
 });
+console.log(imagesArray)
 function changeBackground(){
     console.log(imagesArray[parseInt(Math.random()*imagesArray.length)])
     $("#top").css("background-image" , "url("+ imagesArray[parseInt(Math.random()*imagesArray.length)] +")");      
