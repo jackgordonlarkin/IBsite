@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-139041146-2"></script>
+    
+<script data-ad-client="ca-pub-9169681462744843" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-139041146-2');
+gtag('set', {'user_id': 'USER_ID'}); // Set the user ID using signed-in user_id.
+  gtag('set', 'userId', 'USER_ID'); // Set the user ID using signed-in user_id.
+</script>
+   
+<script src='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.js'></script>
+<link href='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.css' rel='stylesheet' />
+    <link rel="icon" href="logo.png">
+    
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>    <meta http-equiv="X-UA-Compatible" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="2019 Australian Election, Australian Election Results,Australian Election Map,Election Map,Election Results Map, How did we vote, 2019 election results,Scott Morrision Election, 2019 election resuts, 2019 australian election map, 2019 Australian Federal Election, australia votes"> 
+    <meta name="title" content="How did we vote? - A detailed breakdown of Australia's election">
+    <meta name="description" content="An Incredily detailed series of maps detialing how australia voted, see how your community voted">
+    <meta name="author" content= "Jack Larkin">
+    <meta name="og:title" content="How did we vote? - A detailed breakdown of Australia's election">
+    <meta name="og:description" content="An Incredily detailed series of maps detialing how australia voted, see how your community voted">
+    <title>Inward Bound</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/stylish-portfolio.css" rel="stylesheet">
+    <script src = "papaparse.min.js"></script>
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+    <style>
+
+#map2323 { margin:5%;   width:90%;height: 90% }
+</style>
+    
+    
+<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js'></script>
+<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.css' type='text/css' />
+<!-- Promise polyfill script required to use Mapbox GL Geocoder in IE 11 -->
+<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+<style>
+.geocoder {
+
+z-index:2;
+width:40%;
+margin: 2%;
+margin-left:30%;
+}
+	mapboxgl-ctrl-geocoder mapboxgl-ctrl {height: 20%}
+.mapboxgl-ctrl-geocoder { min-width:100%;min-height: 100% }
+.mapboxgl-ctrl-bottom-left{margin-bottom: -28px}
+    </style>
+    <style>
+.map-overlay {
+  position: absolute;
+  top: 100%;
+  left: 5%;
+  background: rgba(255, 255, 255, .9);
+  margin-right: 20px;
+  border-radius: 3px;
+    line-height: 0em;
+}
+    
+</style>
+    <style>
+#menu {
+position: relative;
+background: rgba(255, 255, 255, 0.5);
+padding: 2px;
+top: 3.5%;
+left: 0;
+width: 422px;
+z-index: 111;
+};
+    </style>
+<style>
+    #top{
+    height: 80%;
+        width:100%;
+   </style> 
+<script>
+$.ajax({
+    url: 'headerimages/',
+    success: function (data) {
+        // Find all the <a> tags in the response and add the href attribute to the imagesArray
+        $(data).find("a").attr("href", function (i, val) {
+            if (val.match(/\.(jpe?g|png|gif|jpg)$/)) {
+                imagesArray.push("headerimages/" + val);
+            }
+        });
+    },
+    async: false  // Make the AJAX call synchronous to ensure that the imagesArray is populated before the code continues
+});
+
+function changeBackground(){
+    $("#top").css("background-image" , "url("+ imagesArray[parseInt(Math.random()*imagesArray.length)] +")");      
+};
+
+setInterval(changeBackground, 4000);
+</script>
+ <script>
+  $( document ).ready(function() {
+     $('#sel1').change(function() {
+    $('input:radio[name=rtoggle][value='+$(this).val()+']').click();
+});
+     var mobile = (/iphone|ipod|android|blackberry|mini|windows\sce|palm/i.test(navigator.userAgent.toLowerCase()));  
+    if (mobile) { 
+        $('.mapboxgl-ctrl-bottom-left').css('display', 'none'); // OR you can use $('.navWrap').hide();
+    } 
+});
+   
+
+  </script> 
+  
+</head>
+<body>
+      <a id="menu-toggle" href="#" class="btn btn-dark btn-lg toggle"><i class="fa fa-bars"></i></a>
+    <nav id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+            <a id="menu-close" href="#" class="btn btn-light btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
+            <li class="sidebar-brand">
+                <a href="#top" onclick=$("#menu-close").click();>How did we vote?</a>
+            </li>
+            <li>
+                <a href="#top" onclick=$("#menu-close").click();>Home</a>
+            </li>
+            <li>
+                <a href="#about" onclick=$("#menu-close").click();>About</a>
+            </li>
+            <li>
+                <a href="#contact" onclick=$("#menu-close").click();><b>Contact</b></a>
+            </li>
+        </ul>
+    </nav>
+    <div class="header" id="top">
+        <div class="text-vertical-center">
+            <h1>How did <div id='geocoder' class='geocoder'></div> Vote</h1>   
+            <a href="#map2323" class= "btn btn-dark btn-lg"><b>Start</b></a>
+    </div></div>
+    
+    <footer>
+        <div class="container" id="contact">
+            <div class="row">
+                <div class="col-lg-10 col-lg-offset-1 text-center">
+                    <h4><strong>Inward Bound</strong>
+                    </h4>
+                    <ul class="list-unstyled">
+                        <li><i class="fa fa-envelope-o fa-fw"></i> <a href="mailto:anuinwardbound@gmail.com">anuinwardbound@gmail.com</a>
+                        </li>
+                    </ul>
+                    <br>
+                    <hr class="small">
+                    <p class="text-muted">Copyright &copy;Jack Larkin</p>
+                </div>
+            </div>
+        </div>
+        <a id="to-top" href="#top" class="btn btn-dark btn-lg"><i class="fa fa-chevron-up fa-fw fa-1x"></i></a>
+    </footer>
+    <script src="js/bootstrap.min.js"></script>
+     <script>
+$("#menu-close").click(function(e){e.preventDefault();$("#sidebar-wrapper").toggleClass("active")});$("#menu-toggle").click(function(e){e.preventDefault();$("#sidebar-wrapper").toggleClass("active")});$(function(){$('a[href*=#]:not([href=#],[data-toggle],[data-target],[data-slide])').click(function(){if(location.pathname.replace(/^\//,'')==this.pathname.replace(/^\//,'')||location.hostname==this.hostname){var target=$(this.hash);target=target.length?target:$('[name='+this.hash.slice(1)+']');if(target.length){$('html,body').animate({scrollTop:target.offset().top},1000);return false}}})});var fixed=false;$(document).scroll(function(){if($(this).scrollTop()>250){if(!fixed){fixed=true;$('#to-top').show("slow",function(){$('#to-top').css({position:'fixed',display:'block'})})}}else{if(fixed){fixed=false;$('#to-top').hide("slow",function(){$('#to-top').css({display:'none'})})}}});
+    </script>
+</body>
+</html>
