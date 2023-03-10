@@ -45,30 +45,6 @@ gtag('set', {'user_id': 'USER_ID'}); // Set the user ID using signed-in user_id.
 <!-- Promise polyfill script required to use Mapbox GL Geocoder in IE 11 -->
 <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
-<style>
-.geocoder {
-
-z-index:2;
-width:40%;
-margin: 2%;
-margin-left:30%;
-}
-	mapboxgl-ctrl-geocoder mapboxgl-ctrl {height: 20%}
-.mapboxgl-ctrl-geocoder { min-width:100%;min-height: 100% }
-.mapboxgl-ctrl-bottom-left{margin-bottom: -28px}
-    </style>
-    <style>
-.map-overlay {
-  position: absolute;
-  top: 100%;
-  left: 5%;
-  background: rgba(255, 255, 255, .9);
-  margin-right: 20px;
-  border-radius: 3px;
-    line-height: 0em;
-}
-    
-</style>
     <style>
 #menu {
 position: relative;
@@ -86,20 +62,22 @@ z-index: 111;
         width:100%;
    </style> 
 <script>
+var imagesArray = [];
 $.ajax({
     url: 'headerimages/',
     success: function (data) {
         // Find all the <a> tags in the response and add the href attribute to the imagesArray
         $(data).find("a").attr("href", function (i, val) {
-            if (val.match(/\.(jpe?g|png|gif|jpg)$/)) {
-                imagesArray.push("headerimages/" + val);
+            if (val.match(/.*\.(jpe?g|png|gif)$/i)) {
+                var imagePath = val.replace(/\\/g, "/").replace(/\s/g, "%20");
+                imagesArray.push(imagePath);
             }
         });
     },
     async: false  // Make the AJAX call synchronous to ensure that the imagesArray is populated before the code continues
 });
-
 function changeBackground(){
+    console.log(imagesArray[parseInt(Math.random()*imagesArray.length)])
     $("#top").css("background-image" , "url("+ imagesArray[parseInt(Math.random()*imagesArray.length)] +")");      
 };
 
@@ -118,7 +96,25 @@ setInterval(changeBackground, 4000);
    
 
   </script> 
-  
+  <style>
+    #top {
+        background-image: url("/IBsite/headerimages/headimage%20(1).jpg");
+        background-size: cover;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .logo-img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+        width: 50%;
+    }
+</style>
 </head>
 <body>
       <a id="menu-toggle" href="#" class="btn btn-dark btn-lg toggle"><i class="fa fa-bars"></i></a>
@@ -141,8 +137,7 @@ setInterval(changeBackground, 4000);
     </nav>
     <div class="header" id="top">
         <div class="text-vertical-center">
-            <h1>How did <div id='geocoder' class='geocoder'></div> Vote</h1>   
-            <a href="#map2323" class= "btn btn-dark btn-lg"><b>Start</b></a>
+                    <img src="logo.png" alt="logo" class="logo-img">
     </div></div>
     
     <footer>
