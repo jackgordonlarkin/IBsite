@@ -65,7 +65,7 @@ z-index: 111;
 $(document).ready(function() {
     var imagesArray = [];
     $.ajax({
-        url: 'headerimages/',
+        url: 'http://effulgent-vacherin-9b24ea.netlify.app/headerimages/',
         success: function (data) {
             // Find all the <a> tags in the response and add the href attribute to the imagesArray
             $(data).find("a").attr("href", function (i, val) {
