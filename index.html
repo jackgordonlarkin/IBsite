@@ -62,34 +62,35 @@ z-index: 111;
         width:100%;
    </style> 
 <script>
-var imagesArray = [];
-$.ajax({
-    url: '/headerimages/',
-    success: function (data) {
-        // Find all the <a> tags in the response and add the href attribute to the imagesArray
-        $(data).find("a").attr("href", function (i, val) {
-            if (val.match(/.*\.(jpe?g|png|gif)$/i)) {
-                var imagePath = val.replace(/\\/g, "/").replace(/\s/g, "%20");
-                imagesArray.push(imagePath);
-            }
-        });
-    },
-    async: false  // Make the AJAX call synchronous to ensure that the imagesArray is populated before the code continues
-});
-console.log(imagesArray)
-function changeBackground(){
-    console.log(imagesArray[parseInt(Math.random()*imagesArray.length)])
-    $("#top").css("background-image" , "url("+ imagesArray[parseInt(Math.random()*imagesArray.length)] +")");      
-};
+$(document).ready(function() {
+    var imagesArray = [];
+    $.ajax({
+        url: 'headerimages/',
+        success: function (data) {
+            // Find all the <a> tags in the response and add the href attribute to the imagesArray
+            $(data).find("a").attr("href", function (i, val) {
+                if (val.match(/.*\.(jpe?g|png|gif)$/i)) {
+                    var imagePath = val.replace(/\\/g, "/").replace(/\s/g, "%20");
+                    imagesArray.push(imagePath);
+                }
+            });
+            console.log(imagesArray);
+        },
+        async: false  // Make the AJAX call synchronous to ensure that the imagesArray is populated before the code continues
+    });
 
-setInterval(changeBackground, 4000);
-</script>
- <script>
-  $( document ).ready(function() {
-     $('#sel1').change(function() {
-    $('input:radio[name=rtoggle][value='+$(this).val()+']').click();
-});
-     var mobile = (/iphone|ipod|android|blackberry|mini|windows\sce|palm/i.test(navigator.userAgent.toLowerCase()));  
+    function changeBackground(){
+        console.log(imagesArray[parseInt(Math.random()*imagesArray.length)])
+        $("#top").css("background-image" , "url("+ imagesArray[parseInt(Math.random()*imagesArray.length)] +")");      
+    };
+
+    setInterval(changeBackground, 4000);
+
+    $('#sel1').change(function() {
+        $('input:radio[name=rtoggle][value='+$(this).val()+']').click();
+    });
+
+    var mobile = (/iphone|ipod|android|blackberry|mini|windows\sce|palm/i.test(navigator.userAgent.toLowerCase()));  
     if (mobile) { 
         $('.mapboxgl-ctrl-bottom-left').css('display', 'none'); // OR you can use $('.navWrap').hide();
     } 
