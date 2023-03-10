@@ -1,19 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-139041146-2"></script>
-    
-<script data-ad-client="ca-pub-9169681462744843" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-139041146-2');
-gtag('set', {'user_id': 'USER_ID'}); // Set the user ID using signed-in user_id.
-  gtag('set', 'userId', 'USER_ID'); // Set the user ID using signed-in user_id.
-</script>
    
 <script src='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.js'></script>
 <link href='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.css' rel='stylesheet' />
@@ -89,32 +76,38 @@ z-index: 111;
 }
     </style>
 <script>
-  var imagesArray = [];
-  var xhr = new XMLHttpRequest();
-  xhr.open('GET', 'headerimages/', true);
-  xhr.onload = function () {
-    if (this.status === 200) {
-      var parser = new DOMParser();
-      var response = parser.parseFromString(this.responseText, 'text/html');
-      var links = response.querySelectorAll('a');
-      for (var i = 0; i < links.length; i++) {
-        var href = links[i].getAttribute('href');
-        if (href.match(/.*\.(jpe?g|png|gif)$/i)) {
-          var imagePath = href.replace(/\\/g, "/").replace(/\s/g, "%20");
-          var filename = imagePath.split('/').pop(); // Extract just the filename
-          imagesArray.push(filename);
-        }
-      }
-        console.log(imagesArray);
-      setInterval(function () {
-        var randomIndex = Math.floor(Math.random() * imagesArray.length);
-        var randomImage = imagesArray[randomIndex];
-        var imageUrl = "headerimages/" + randomImage;
-        document.getElementById('top').style.backgroundImage = "url('" + imageUrl + "')";
-      }, 3000);
+// Flickr API settings
+var apiKey = '7cd19ae22b08f9308d51b140551208f5';
+var albumId = '72177720306603217';
+var apiSecret = '90d7616a0ffa6f57';
+var imagesArray =[]
+// Construct the URL to fetch images from the album
+var flickrApiUrl = 'https://www.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=' + apiKey + '&photoset_id=' + albumId + '&format=json&nojsoncallback=1';
+
+// Fetch images from the album using the Flickr API
+fetch(flickrApiUrl)
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(data) {
+    // Loop through each photo in the album and add its URL to the imagesArray
+    for (var i = 0; i < data.photoset.photo.length; i++) {
+      var photo = data.photoset.photo[i];
+      var imageUrl = 'https://live.staticflickr.com/' + photo.server + '/' + photo.id + '_' + photo.secret + '_b.jpg';
+      imagesArray.push(imageUrl);
     }
-  };
-  xhr.send();
+    console.log(imagesArray);
+    
+    // Set a random image from the imagesArray as the background of the #top element every 3 seconds
+    setInterval(function () {
+      var randomIndex = Math.floor(Math.random() * imagesArray.length);
+      var randomImage = imagesArray[randomIndex];
+      document.getElementById('top').style.backgroundImage = "url('" + randomImage + "')";
+    }, 3000);
+  })
+  .catch(function(error) {
+    console.error(error);
+  });
 </script> 
   <style>
     #top {
